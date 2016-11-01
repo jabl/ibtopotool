@@ -1,10 +1,10 @@
-#!/usr/bin/python2
+#!/usr/bin/env python3
 
 # Generate a graphviz dot file from IB topology
 
 def add_lidpair(graph, srclid, targetlid):
-    if graph.has_key(srclid):
-        if graph[srclid].has_key(targetlid):
+    if srclid in graph:
+        if targetlid in graph[srclid]:
             graph[srclid][targetlid] += 1
         else:
             graph[srclid][targetlid] = 1
