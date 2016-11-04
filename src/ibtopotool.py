@@ -85,7 +85,7 @@ def parse_ibtopo(topofile):
                 g.add_edge(guid, destguid, weight=w)
     return g
 
-def gen_dot(graph, switches, out):
+def gen_dot(graph, out):
     from networkx.drawing.nx_pydot import write_dot
     write_dot(graph, out)
 
@@ -115,12 +115,57 @@ python-hostlist, https://pypi.python.org/pypi/python-hostlist""")
             if len(switches) > 0:
                 switches.sort()
                 switchstring = " Switches=" + hostlist.collect_hostlist(switches)
+            nodestr = ''
             if len(nodes) > 0:
                 nodes.sort()
                 nodestr = " Nodes=" + hostlist.collect_hostlist(nodes)
             out.write('SwitchName=%s%s%s\n' % (g.node[n]['label'],
                                                switchstring, nodestr))
 
+
+def treeify(g, rootfile):
+    """Generate a DAG with roots given in the file rootfile"""
+    roots = []
+    with open(rootfile, 'r') as f:
+        for line in f:
+            l = line.strip()
+            if l.startswith('#'):
+                continue
+            ii = l.find('#')
+            if ii >= 1:
+                l = l[:ii]
+            roots.append(l)
+    # Unfortunately, bfs_tree drops all attributes. Save them
+    # manually, reapply them later
+    nattrs_type = nx.get_node_attributes(g, 'type')
+    nattrs_desc = nx.get_node_attributes(g, 'desc')
+    nattrs_label = nx.get_node_attributes(g, 'label')
+    eattrs_weight = nx.get_edge_attributes(g, 'weight')
+    gdag = nx.DiGraph()
+    for root in roots:
+        gdag = nx.compose(gdag, nx.bfs_tree(g, root))
+    nx.set_node_attributes(gdag, 'type', nattrs_type)
+    nx.set_node_attributes(gdag, 'desc', nattrs_desc)
+    nx.set_node_attributes(gdag, 'label', nattrs_label)
+    # A fun thing with set_edge_attributes, is that it fails if an
+    # edge tuple is missing. So first manually remove missing tuples.
+    todel = []
+    for t in eattrs_weight:
+        if t not in gdag:
+            todel.append(t)
+    for t in todel:
+        del eattrs_weight[t]
+    nx.set_edge_attributes(gdag, 'weight', eattrs_weight)
+    # Mark the roots with color for graphviz
+    for root in roots:
+        gdag.node[root]['fillcolor'] = 'red'
+        gdag.node[root]['style'] = 'filled'
+    return gdag
+
+def only_switches(g):
+    """Filter out nodes that are not switches"""
+    return g.subgraph([n for n, attrs in g.node.items() if attrs['type']
+                       == 'Switch'])
 
 if __name__ == '__main__':
     from optparse import OptionParser
@@ -136,13 +181,19 @@ ibtopofile is a file containing the output of 'ibnetdiscover'."""
                       help='Output file, if omitted stdout')
     parser.add_option('--slurm', dest='slurm', action='store_true',
                       help='Output in slurm topology.conf format')
+    parser.add_option('--treeify', dest='treeify',
+                      help="Give a file containing GUID's for spine switches")
     (options, args) = parser.parse_args()
     graph = parse_ibtopo(args[0])
     if options.output:
         out = open(options.output, 'w')
     else:
         out = sys.stdout
+    if options.switches:
+        graph = only_switches(graph)
+    if options.treeify:
+        graph = treeify(graph, options.treeify)
     if options.slurm:
         gen_slurm(graph, out)
     else:
-        gen_dot(graph, options.switches, out)
+        gen_dot(graph, out)
