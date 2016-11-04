@@ -66,7 +66,8 @@ def parse_ibtopo(topofile):
                 i = line.index('#')
                 s = line[i:].split('"')
                 nodedesc = s[1]
-                g.add_node(guid, desc=nodedesc, type='Switch', id=switchidx)
+                sid = "s%d" % switchidx
+                g.add_node(guid, desc=nodedesc, type='Switch', label=sid)
                 switchidx += 1
             elif line.startswith('Ca'):
                 inblock = True
@@ -74,7 +75,7 @@ def parse_ibtopo(topofile):
                 i = line.index('#')
                 s = line[i:].split('"')
                 nodedesc = s[1].split()[0]
-                g.add_node(guid, desc=nodedesc, type='Host')
+                g.add_node(guid, label=nodedesc, type='Host')
             elif len(line) == 0 or line.isspace():
                 inblock = False
             elif inblock:
@@ -106,9 +107,9 @@ python-hostlist, https://pypi.python.org/pypi/python-hostlist""")
             nodes = []
             for nbr in nbrs:
                 if g.node[nbr]['type'] == 'Switch':
-                    switches.append("s%d" % g.node[nbr]['id'])
+                    switches.append(g.node[nbr]['label'])
                 else:
-                    nodename = g.node[nbr]['desc']
+                    nodename = g.node[nbr]['label']
                     nodes.append(nodename)
             switchstring = ""
             if len(switches) > 0:
@@ -117,7 +118,8 @@ python-hostlist, https://pypi.python.org/pypi/python-hostlist""")
             if len(nodes) > 0:
                 nodes.sort()
                 nodestr = " Nodes=" + hostlist.collect_hostlist(nodes)
-            out.write('SwitchName=s%d%s%s\n' % (g.node[n]['id'], switchstring, nodestr))
+            out.write('SwitchName=%s%s%s\n' % (g.node[n]['label'],
+                                               switchstring, nodestr))
 
 
 if __name__ == '__main__':
