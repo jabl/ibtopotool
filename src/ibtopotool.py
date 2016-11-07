@@ -129,11 +129,11 @@ def treeify(g, rootfile):
     with open(rootfile, 'r') as f:
         for line in f:
             l = line.strip()
-            if l.startswith('#'):
+            if l.startswith('#') or len(l) == 0:
                 continue
             ii = l.find('#')
             if ii >= 1:
-                l = l[:ii]
+                l = l[:ii].rstrip()
             roots.append(l)
     # Unfortunately, bfs_tree drops all attributes. Save them
     # manually, reapply them later
