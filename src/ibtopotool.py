@@ -89,8 +89,10 @@ def parse_ibtopo(topofile, shortlabel):
                 # If the edge already exists, add the weigth to it
                 try:
                     g[guid][destguid]['weight'] += w
+                    g[guid][destguid]['penwidth'] += 1
                 except KeyError:
                     g.add_edge(guid, destguid, weight=w)
+                    g[guid][destguid]['penwidth'] = 1
     return g
 
 def gen_dot(graph, out):
