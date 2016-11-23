@@ -178,6 +178,20 @@ def only_switches(g):
     return g.subgraph([n for n, attrs in g.node.items() if attrs['type']
                        == 'Switch'])
 
+def relabel_switch_tree(g):
+    """If shortlabels and treeify is in effect, relabel switches taking
+into account the rank (distance from root(s)) in the tree.
+
+    """
+    srl = {} # rank:labelindex dict
+    for n in g.nodes_iter():
+        if g.node[n]['type'] == 'Switch':
+            r = g.node[n]['rank']
+            if not r in srl:
+                srl[r] = 0
+            g.node[n]['label'] = 's%d-%d' % (r, srl[r])
+            srl[r] += 1
+
 if __name__ == '__main__':
     from optparse import OptionParser
     import sys
@@ -197,7 +211,9 @@ ibtopofile is a file containing the output of 'ibnetdiscover'."""
     parser.add_option('--shortlabels', dest='shortlabels', action='store_true',
                       help='Use short labels for switches')
     (options, args) = parser.parse_args()
-    graph = parse_ibtopo(args[0], options.shortlabels or options.slurm)
+    if options.slurm:
+        options.shortlabels = True
+    graph = parse_ibtopo(args[0], options.shortlabels)
     if options.output:
         out = open(options.output, 'w')
     else:
@@ -206,6 +222,8 @@ ibtopofile is a file containing the output of 'ibnetdiscover'."""
         graph = only_switches(graph)
     if options.treeify:
         graph = treeify(graph, options.treeify)
+        if options.shortlabels:
+            relabel_switch_tree(graph)
     if options.slurm:
         gen_slurm(graph, out)
     else:
