@@ -211,6 +211,9 @@ ibtopofile is a file containing the output of 'ibnetdiscover'."""
     parser.add_option('--shortlabels', dest='shortlabels', action='store_true',
                       help='Use short labels for switches')
     (options, args) = parser.parse_args()
+    if len(args) == 0:
+        parser.print_help()
+        sys.exit(1)
     if options.slurm:
         options.shortlabels = True
     graph = parse_ibtopo(args[0], options.shortlabels)
