@@ -40,10 +40,18 @@ def speed2weight(speed):
         s = 4
     elif s1 == 'QDR':
         s = 8
+    elif s1 == 'FDR10':
+        s = 10 # ???
     elif s1 == 'FDR':
         s = 13.64
     elif s1 == 'EDR':
         s = 24.24
+    elif s1 == 'HDR':
+        s = 50 # roughly??
+    elif s1 == 'NDR':
+        s = 100 # roughly?
+    elif s1 == 'XDR':
+        s = 250 # the future?
     else:
         raise NotImplementedError('Support for Infiniband speed %s not implemented' % s1)
     return nlinks * s
