@@ -14,23 +14,14 @@ Dependencies
 ============
 
 This tool uses the `NetworkX library <https://networkx.github.io/>`_
-to represent the nodes and links between them. On Debian/Ubuntu and
-RHEL/CentOS with EPEL NetworkX is available in a package called
-"python-networkx".
+version 2.x or newer to represent the nodes and links between
+them. The easiest way is probably to use the Anaconda python
+distribution.
 
 In order to generate a slurm topology file, the `python-hostlist
 library <https://pypi.python.org/pypi/python-hostlist>`_ is
-required. It's not available in typical Linux distributio package
-sets, but you can install it with pip, like "pip install
-python-hostlist".
+required. It's not available in Anaconda, but you can install it with
+pip, like "pip install -U --user python-hostlist".
 
-To generate graphviz output (the default), on needs a networkx library
-with a functioning graphviz interface. This can be a problem due to
-https://github.com/networkx/networkx/issues/2235 . Unfortunately, it
-seems that the version packaged for RHEL/CentOS 7 in EPEL is such a
-version that it doesn't work. Also the version of python-networkx in
-Ubuntu 16.04 is the graphviz interface module, but it depends on the
-python-pydotplus module which is not available in the standard Ubuntu
-package repositories. You can find python-pydotplus packaged in
-`NeuroDebian <http://neuro.debian.net/>`_, or install it from pypi
-with "pip install pydotplus".
+To generate graphviz output (the default), one needs the pydot
+library.
