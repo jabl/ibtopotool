@@ -173,7 +173,8 @@ def treeify(g, rootfile):
 
 def only_switches(g):
     """Filter out nodes that are not switches"""
-    return g.subgraph([n for n, attrs in g.node.items() if attrs['type']
+    # print(g.nodes()['S-248a070300f7aff0'])
+    return g.subgraph([n for n in g.nodes() if g.nodes()[n]['type']
                        == 'Switch'])
 
 def relabel_switch_tree(g):
