@@ -18,7 +18,7 @@ import networkx as nx
 def speed2weight(speed):
     """Convert an IB speed to an edge weight
 
-    See e.g. https://en.wikipedia.org/wiki/InfiniBand
+    See e.g. https://en.wikipedia.org/wiki/InfiniBand#Performance single lane (1x)
 
     """
     ss = speed.split('x')
@@ -31,17 +31,17 @@ def speed2weight(speed):
     elif s1 == 'QDR':
         s = 8
     elif s1 == 'FDR10':
-        s = 10 # ???
+        s = 10
     elif s1 == 'FDR':
         s = 13.64
     elif s1 == 'EDR':
-        s = 24.24
+        s = 25
     elif s1 == 'HDR':
-        s = 50 # roughly??
+        s = 50
     elif s1 == 'NDR':
-        s = 100 # roughly?
+        s = 100
     elif s1 == 'XDR':
-        s = 250 # the future?
+        s = 200
     else:
         raise NotImplementedError('Support for Infiniband speed %s not implemented' % s1)
     return nlinks * s
