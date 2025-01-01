@@ -1,0 +1,26 @@
+#
+# Topology file: generated on Wed May  6 15:14:42 2009
+#
+# Max of 2 hops discovered
+# Initiated from node 0002c9030002847c port 0002c9030002847e
+
+vendid=0x2c9
+devid=0xa87c
+switchguid=0xb8cffff0053ee(b8cffff0053ee)
+Switch  8 "S-000b8cffff0053ee"          # "MT43132 Mellanox Technologies" base port 0 lid 3 lmc 0
+[1]     "H-0002c902002789ac"[1](2c902002789ad)          # "compute-00-01 HCA-1" lid 1 4xSDR
+[2]     "H-0002c9030002847c"[2](2c9030002847e)          # "compute-00-00 HCA-1" lid 2 4xSDR
+
+vendid=0x2c9
+devid=0x5a44
+sysimgguid=0x2c902002789af
+caguid=0x2c902002789ac
+Ca      2 "H-0002c902002789ac"          # "compute-00-01 HCA-1"
+[1](2c902002789ad)      "S-000b8cffff0053ee"[1]         # lid 1 lmc 0 "MT43132 Mellanox Technologies" lid 3 4xSDR
+
+vendid=0x2c9
+devid=0x6340
+sysimgguid=0x2c9030002847f
+caguid=0x2c9030002847c
+Ca      2 "H-0002c9030002847c"          # "compute-00-00 HCA-1"
+[2](2c9030002847e)      "S-000b8cffff0053ee"[2]         # lid 2 lmc 0 "MT43132 Mellanox Technologies" lid 3 4xSDR

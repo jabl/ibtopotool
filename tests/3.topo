@@ -1,0 +1,73 @@
+src/query_smp.c:195; umad (DR path slid 0; dlid 0; 0,1,1,31 Attr 0x11:0) bad status 110; Connection timed out
+#
+# Topology file: generated on Mon Jul 25 11:30:26 2016
+#
+# Initiated from node 0002c9030004e938 port 0002c9030004e939
+
+vendid=0x2c9
+devid=0xcb20
+sysimgguid=0xe41d2d030003e470
+switchguid=0xe41d2d030003e470(e41d2d030003e470)
+Switch 36 "S-e41d2d030003e470" # "SwitchIB Mellanox Technologies" base port 0 lid 268 lmc 0
+[1] "S-e41d2d030003e470"[2] # "SwitchIB Mellanox Technologies" lid 268 4xEDR
+[2] "S-e41d2d030003e470"[1] # "SwitchIB Mellanox Technologies" lid 268 4xEDR
+[3] "S-f4521403005764b0"[1] # "MF0;switch-de779e:SX6012/U1" lid 174 4xFDR
+[19] "S-e41d2d030003e470"[21] # "SwitchIB Mellanox Technologies" lid 268 4xEDR
+[21] "S-e41d2d030003e470"[19] # "SwitchIB Mellanox Technologies" lid 268 4xEDR
+[29] "S-e41d2d030003e470"[30] # "SwitchIB Mellanox Technologies" lid 268 4xEDR
+[30] "S-e41d2d030003e470"[29] # "SwitchIB Mellanox Technologies" lid 268 4xEDR
+[34] "H-e41d2d030061f957"[1](e41d2d030061f957) # "r-ufm216 HCA-2" lid 2 4xEDR
+[35] "H-0002c903003421b0"[2](2c903003421b2) # "r-ufm111 HCA-1" lid 3 4xFDR
+
+vendid=0x2c9
+devid=0xc738
+sysimgguid=0xf4521403005764b0
+switchguid=0xf4521403005764b0(f4521403005764b0)
+Switch 12 "S-f4521403005764b0" # "MF0;switch-de779e:SX6012/U1" enhanced port 0 lid 174 lmc 0
+[1] "S-e41d2d030003e470"[3] # "SwitchIB Mellanox Technologies" lid 268 4xFDR
+[2] "H-0002c9030004e938"[1](2c9030004e939) # "r-ufm101 HCA-1" lid 27 4xQDR
+[3] "H-0002c9030006ba5a"[1](2c9030006ba5b) # "r-ufm101 HCA-2" lid 30 4xQDR
+[6] "H-0002c90300337140"[1](2c90300337141) # "r-ufm100 HCA-2" lid 28 4xFDR
+[8] "H-e41d2d03005cf1f8"[1](e41d2d03005cf1f8) # "r-ufm96 HCA-1" lid 1 4xSDR
+
+vendid=0x2c9
+devid=0x1003
+sysimgguid=0x2c903003421b3
+caguid=0x2c903003421b0
+Ca 2 "H-0002c903003421b0" # "r-ufm111 HCA-1"
+[2](2c903003421b2) "S-e41d2d030003e470"[35] # lid 3 lmc 0 "SwitchIB Mellanox Technologies" lid 268 4xFDR
+
+vendid=0x2c9
+devid=0x1013
+sysimgguid=0xe41d2d030061f956
+caguid=0xe41d2d030061f957
+Ca 1 "H-e41d2d030061f957" # "r-ufm216 HCA-2"
+[1](e41d2d030061f957) "S-e41d2d030003e470"[34] # lid 2 lmc 0 "SwitchIB Mellanox Technologies" lid 268 4xEDR
+
+vendid=0x2c9
+devid=0x673c
+sysimgguid=0x2c9030006ba5d
+caguid=0x2c9030006ba5a
+Ca 2 "H-0002c9030006ba5a" # "r-ufm101 HCA-2"
+[1](2c9030006ba5b) "S-f4521403005764b0"[3] # lid 30 lmc 0 "MF0;switch-de779e:SX6012/U1" lid 174 4xQDR
+
+vendid=0x2c9
+devid=0x1003
+sysimgguid=0x2c90300337143
+caguid=0x2c90300337140
+Ca 2 "H-0002c90300337140" # "r-ufm100 HCA-2"
+[1](2c90300337141) "S-f4521403005764b0"[6] # lid 28 lmc 0 "MF0;switch-de779e:SX6012/U1" lid 174 4xFDR
+
+vendid=0x2c9
+devid=0x1013
+sysimgguid=0xe41d2d03005cf1f8
+caguid=0xe41d2d03005cf1f8
+Ca 1 "H-e41d2d03005cf1f8" # "r-ufm96 HCA-1"
+[1](e41d2d03005cf1f8) "S-f4521403005764b0"[8] # lid 1 lmc 0 "MF0;switch-de779e:SX6012/U1" lid 174 4xSDR
+
+vendid=0x2c9
+devid=0x673c
+sysimgguid=0x2c9030004e93b
+caguid=0x2c9030004e938
+Ca 1 "H-0002c9030004e938" # "r-ufm101 HCA-1"
+[1](2c9030004e939) "S-f4521403005764b0"[2] # lid 27 lmc 0 "MF0;switch-de779e:SX6012/U1" lid 174 4xQDR
