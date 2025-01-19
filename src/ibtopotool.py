@@ -168,12 +168,13 @@ def treeify(g, rootfile):
         for nbr in nbrs:
             if g.nodes[n]['rank'] > g.nodes[nbr]['rank']:
                 todel.append((n, nbr))
-    g.remove_edges_from(todel)
-    return g
+    g2 = nx.Graph(g)
+    g2.remove_edges_from(todel)
+    return g2
 
 def only_switches(g):
     """Filter out nodes that are not switches"""
-    return g.subgraph([n for n in g if n['type']
+    return g.subgraph([n for n in g.nodes() if g.nodes()[n]['type']
                        == 'Switch'])
 
 def relabel_switch_tree(g):
