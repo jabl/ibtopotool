@@ -1,0 +1,18 @@
+#
+# Topology file: generated on Sat Apr 13 22:28:55 2002
+#
+# Max of 1 hops discovered
+# Initiated from node 0021283a8389a0a0 port 0021283a8389a0a0
+vendid=0x2c9
+devid=0xbd36
+sysimgguid=0x21283a8389a0a3
+switchguid=0x21283a8389a0a0(21283a8389a0a0)
+Switch  36 "S-0021283a8389a0a0" # "Sun DCS 36 QDR switch localhost" enhanced port 0 lid 15 lmc 0
+[23]    "H-0003ba000100e388"[2](3ba000100e38a) # "nsn33-43 HCA-1" lid 14 4xQDR
+ 
+vendid=0x2c9
+devid=0x673c
+sysimgguid=0x3ba000100e38b
+caguid=0x3ba000100e388
+Ca      2 "H-0003ba000100e388" # "nsn33-43 HCA-1"
+[2](3ba000100e38a)      "S-0021283a8389a0a0"[23] # lid 14 lmc 0 "Sun DCS 36 QDR switch localhost" lid 15 4xQDR
