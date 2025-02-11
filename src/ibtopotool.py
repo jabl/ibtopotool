@@ -67,6 +67,8 @@ def parse_ibtopo(topofile, shortlabel):
                 sid = "s%d" % switchidx
                 if shortlabel:
                     label = sid
+                elif options.mermaid or options.markdown:
+                    label = "%s %s" % (guid, nodedesc)
                 else:
                     label = "%s\n%s" % (guid, nodedesc)
                 g.add_node(guid, desc=nodedesc, type='Switch', label=label)
@@ -96,6 +98,33 @@ def parse_ibtopo(topofile, shortlabel):
 def gen_dot(graph, out):
     from networkx.drawing.nx_pydot import write_dot
     write_dot(graph, out)
+
+def gen_mermaid(g, out):
+    """
+    g: A networkx graph representing the IB network
+    out: Output file-like object, mermaid or markdown
+    """
+    if options.markdown:
+        out.write('```mermaid\n')
+    out.write('graph TD\n')
+    ##In case some particular topology would render more cleanly on elk:
+    #out.write('%%{init: {"flowchart": {"defaultRenderer": "elk"}} }%%\n')
+    for n, nbrs in g.adjacency():
+        switches = []
+        nodes = []
+        for nbr in nbrs:
+            if g.nodes[nbr]['type'] == 'Switch':
+                switches.append('%s(%s)' % (nbr, g.nodes[nbr]['label']))
+            else:
+                nodes.append('%s(%s)' % (nbr, g.nodes[nbr]['label']))
+        if len(switches) > 0:
+            for sw in switches:
+                out.write('%s(%s) --> %s\n' % (n, g.nodes[n]['label'], sw))
+        if len(nodes) > 0:
+            for ibnode in nodes:
+                out.write('%s(%s) --> %s\n' % (n, g.nodes[n]['label'], ibnode))
+    if options.markdown:
+        out.write('```\n')
 
 def gen_slurm(g, out):
     """
@@ -203,6 +232,10 @@ ibtopofile is a file containing the output of 'ibnetdiscover'."""
                       help='Include only switch nodes')
     parser.add_option('-o', '--output', dest='output',
                       help='Output file, if omitted stdout')
+    parser.add_option('--mermaid', dest='mermaid', action='store_true',
+                      help='Output in mermaid format.')
+    parser.add_option('--markdown', dest='markdown', action='store_true',
+                      help='Output in markdown encapsulated mermaid format. Implies --mermaid.')
     parser.add_option('--slurm', dest='slurm', action='store_true',
                       help='Output in slurm topology.conf format. Implies --shortlabels.')
     parser.add_option('-t', '--treeify', dest='treeify',
@@ -228,5 +261,7 @@ ibtopofile is a file containing the output of 'ibnetdiscover'."""
             relabel_switch_tree(graph)
     if options.slurm:
         gen_slurm(graph, out)
+    elif (options.mermaid or options.markdown):
+        gen_mermaid(graph, out)
     else:
         gen_dot(graph, out)

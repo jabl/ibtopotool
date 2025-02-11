@@ -7,8 +7,8 @@ How to run
 ==========
 
 ``cd tests``
-``./run_tests.sh``
 
+``./run_tests.sh``
 
 Test topology sources
 =====================
