@@ -20,6 +20,11 @@ for TOPO in *.topo; do
     "python3 ../src/ibtopotool.py --slurm -t t.tmp          -o ${OUTFILE} ${TOPO}"
     "python3 ../src/ibtopotool.py --slurm -s                -o ${OUTFILE} ${TOPO}"
     "python3 ../src/ibtopotool.py --slurm -s -t t.tmp       -o ${OUTFILE} ${TOPO}"
+    "python3 ../src/ibtopotool.py --mermaid                 -o ${OUTFILE} ${TOPO}"
+    "python3 ../src/ibtopotool.py --markdown                -o ${OUTFILE} ${TOPO}"
+    "python3 ../src/ibtopotool.py --markdown -s             -o ${OUTFILE} ${TOPO}"
+    "python3 ../src/ibtopotool.py --markdown -s -t t.tmp    -o ${OUTFILE} ${TOPO}"
+    "python3 ../src/ibtopotool.py --markdown --shortlabels  -o ${OUTFILE} ${TOPO}"
   )
 
   # Execute tests
