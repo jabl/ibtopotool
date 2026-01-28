@@ -106,7 +106,7 @@ def gen_mermaid(g, out):
     """
     if options.markdown:
         out.write('```mermaid\n')
-    out.write('graph TD\n')
+    out.write('graph LR\n')
     ##In case some particular topology would render more cleanly on elk:
     #out.write('%%{init: {"flowchart": {"defaultRenderer": "elk"}} }%%\n')
     for n, nbrs in g.adjacency():
@@ -116,7 +116,7 @@ def gen_mermaid(g, out):
             if g.nodes[nbr]['type'] == 'Switch':
                 switches.append('%s(%s)' % (nbr, g.nodes[nbr]['label']))
             else:
-                nodes.append('%s(%s)' % (nbr, g.nodes[nbr]['label']))
+                nodes.append('%s' % (g.nodes[nbr]['label']))
         if len(switches) > 0:
             for sw in switches:
                 out.write('%s(%s) --> %s\n' % (n, g.nodes[n]['label'], sw))
@@ -197,7 +197,7 @@ def treeify(g, rootfile):
         for nbr in nbrs:
             if g.nodes[n]['rank'] > g.nodes[nbr]['rank']:
                 todel.append((n, nbr))
-    g2 = nx.Graph(g)
+    g2 = nx.DiGraph(g)
     g2.remove_edges_from(todel)
     return g2
 
