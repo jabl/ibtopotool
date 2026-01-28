@@ -15,13 +15,25 @@ Dependencies
 
 This tool uses the `NetworkX library <https://networkx.github.io/>`_
 version 2.x or newer to represent the nodes and links between
-them. The easiest way is probably to use the Anaconda python
-distribution.
+them.
 
-In order to generate a slurm topology file, the `python-hostlist
-library <https://pypi.python.org/pypi/python-hostlist>`_ is
-required. It's not available in Anaconda, but you can install it with
-pip, like "pip install -U --user python-hostlist".
+In order to generate a slurm topology file, the `ClusterShell
+library <https://clustershell.readthedocs.io>`_ is
+required.
 
-To generate graphviz output (the default), one needs the pydot
-library.
+To generate graphviz output (the default), one needs the `pydot
+library <https://github.com/pydot/pydot>`_.
+
+To install all dependencies using a Python virtual environment:
+
+.. code-block::
+
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+
+Alternatively, if using Debian or Ubuntu:
+
+.. code-block::
+
+   apt install python3-pydot python3-networkx python3-clustershell
