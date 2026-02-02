@@ -68,7 +68,9 @@ def parse_ibtopo(topofile, shortlabel):
                 elif options.mermaid or options.markdown:
                     label = "%s %s" % (guid, nodedesc)
                 else:
-                    label = "%s\n%s" % (guid, nodedesc)
+                    label = '"%s\n%s"' % (guid, nodedesc)
+                if " " in nodedesc or ":" in nodedesc:
+                    nodedesc = f'"{nodedesc}"'
                 g.add_node(guid, desc=nodedesc, type='Switch', label=label)
                 switchidx += 1
             elif line.startswith('Ca'):
@@ -77,6 +79,8 @@ def parse_ibtopo(topofile, shortlabel):
                 i = line.index('#')
                 s = line[i:].split('"')
                 nodedesc = s[1].split()[0]
+                if " " in nodedesc or ":" in nodedesc:
+                    nodedesc = f'"{nodedesc}"'
                 g.add_node(guid, label=nodedesc, type='Host')
             elif len(line) == 0 or line.isspace():
                 inblock = False
